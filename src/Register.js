@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Error from "./Error";
 
 export default function Register() {
   const [input, setInput] = useState({
@@ -18,7 +19,7 @@ export default function Register() {
   const handleInput = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    
+
     switch (name) {
       case "userName":
         const regExpUserName = /^([A-Z]+[A-Za-z]*)$/;
@@ -106,6 +107,9 @@ export default function Register() {
                     value={input.userName}
                     onChange={handleInput}
                   />
+                  {error.userName !== "" ? (
+                    <Error message={error.userName} />
+                  ) : null}
                 </div>
                 <div className="form-group">
                   <label htmlFor="email" className="text-light">
@@ -120,6 +124,7 @@ export default function Register() {
                     value={input.email}
                     onChange={handleInput}
                   />
+                  {error.email !== "" ? <Error message={error.email} /> : null}
                 </div>
                 <div className="form-group">
                   <label htmlFor="password" className="text-light">
@@ -134,6 +139,9 @@ export default function Register() {
                     value={input.password}
                     onChange={handleInput}
                   />
+                  {error.password !== "" ? (
+                    <Error message={error.password} />
+                  ) : null}
                 </div>
                 <div className="form-group">
                   <label htmlFor="confirmedPassword" className="text-light">
@@ -148,6 +156,9 @@ export default function Register() {
                     value={input.confirmedPassword}
                     onChange={handleInput}
                   />
+                  {error.confirmedPassword !== "" ? (
+                    <Error message={error.confirmedPassword} />
+                  ) : null}
                 </div>
                 <button
                   type="submit"
