@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { GiExplosiveMeeting } from "react-icons/gi";
+import Navigation from "./Navigation";
 import "./App.css";
 
 function App() {
@@ -8,54 +8,7 @@ function App() {
   return (
     <div className="App">
       {/** Navigation */}
-      <nav className="navbar bg-success navbar-dark mb-5">
-        <a href="/" className="navbar-brand">
-          <GiExplosiveMeeting className="mr-2" />
-          Meeting Log
-        </a>
-        <ul className="nav">
-          {!user && (
-            <li className="nav-item">
-              <a
-                href="/register"
-                className="nav-link text-light font-weight-bold text-center"
-              >
-                register
-              </a>
-            </li>
-          )}
-          {!user && (
-            <li className="nav-item">
-              <a
-                href="/login"
-                className="nav-link text-light font-weight-bold text-center"
-              >
-                log in
-              </a>
-            </li>
-          )}
-          {user && (
-            <li className="nav-item">
-              <a
-                href="/meetings"
-                className="nav-link text-light font-weight-bold text-center"
-              >
-                meetings
-              </a>
-            </li>
-          )}
-          {user && (
-            <li className="nav-item">
-              <a
-                href="/logout"
-                className="nav-link text-light font-weight-bold text-center"
-              >
-                log out
-              </a>
-            </li>
-          )}
-        </ul>
-      </nav>
+      <Navigation user={user} />
       {/** Welcome */}
       {user && (
         <div className="container">
@@ -64,7 +17,9 @@ function App() {
               <div className="d-flex align-items-center justify-content-center mb-4">
                 <p className="mb-0 mr-2">
                   Welcome,
-                  <span className="text-success font-weight-bold ml-2">{user}</span>
+                  <span className="text-success font-weight-bold ml-2">
+                    {user}
+                  </span>
                 </p>
                 <a href="/logout" className="font-weight-bold">
                   log out
