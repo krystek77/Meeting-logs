@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink as Link } from "react-router-dom";
 
 export default function Welcome(props) {
   let welcome = (
@@ -12,9 +13,9 @@ export default function Welcome(props) {
                 {props.user}
               </span>
             </p>
-            <a href="/logout" className="font-weight-bold">
+            <Link to="/logout" className="font-weight-bold">
               log out
-            </a>
+            </Link>
           </div>
         </div>
       </div>

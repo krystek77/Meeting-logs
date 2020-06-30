@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink as Link } from "react-router-dom";
 
 export default function Home(props) {
   return (
@@ -30,7 +31,9 @@ export default function Home(props) {
       {props.user && (
         <div className="row">
           <div className="col text-center">
-            <a className="btn btn-success btn-lg" href="/meetings">meetings</a>
+            <Link className="btn btn-success btn-lg" to="/meetings">
+              meetings
+            </Link>
           </div>
         </div>
       )}

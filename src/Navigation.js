@@ -1,53 +1,53 @@
 import React from "react";
+import { NavLink as Link } from "react-router-dom";
 import { GiExplosiveMeeting } from "react-icons/gi";
 
 export default function Navigation(props) {
-  
   return (
     <nav className="navbar bg-success navbar-dark mb-5">
-      <a href="/" className="navbar-brand">
+      <Link to="/" className="navbar-brand">
         <GiExplosiveMeeting className="mr-2" />
         Meeting Log
-      </a>
+      </Link>
       <ul className="nav">
         {!props.user && (
           <li className="nav-item">
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="nav-link text-light font-weight-bold text-center"
             >
               register
-            </a>
+            </Link>
           </li>
         )}
         {!props.user && (
           <li className="nav-item">
-            <a
-              href="/login"
+            <Link
+              to="/login"
               className="nav-link text-light font-weight-bold text-center"
             >
               log in
-            </a>
+            </Link>
           </li>
         )}
         {props.user && (
           <li className="nav-item">
-            <a
-              href="/meetings"
+            <Link
+              to="/meetings"
               className="nav-link text-light font-weight-bold text-center"
             >
               meetings
-            </a>
+            </Link>
           </li>
         )}
         {props.user && (
           <li className="nav-item">
-            <a
-              href="/logout"
+            <Link
+              to="/logout"
               className="nav-link text-light font-weight-bold text-center"
             >
               log out
-            </a>
+            </Link>
           </li>
         )}
       </ul>
