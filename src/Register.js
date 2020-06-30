@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Error from "./Error";
+import firebase from "./Firebase";
 
 export default function Register() {
   const [input, setInput] = useState({
@@ -14,6 +15,11 @@ export default function Register() {
     email: "",
     password: "",
     confirmedPassword: "",
+  });
+
+  const [authError, setAuthError] = useState({
+    code: "",
+    errorMessage: "",
   });
 
   const handleInput = (event) => {
@@ -78,8 +84,32 @@ export default function Register() {
     setInput({ ...input, [name]: value });
   };
 
-  const handleForm = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    const registeredData = {
+      userName: input.userName,
+      email: input.email,
+      password: input.password,
+    };
+    console.log(registeredData);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(
+        registeredData.email,
+        registeredData.password
+      )
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((error) => {
+        if (error.message !== null) {
+          const code = error.code;
+          const message = error.message;
+          setAuthError({ code: code, errorMessage: message });
+        } else {
+          setAuthError({ code: "", errorMessage: "" });
+        }
+      });
   };
 
   return (
@@ -93,7 +123,7 @@ export default function Register() {
         <div className="col-lg-8">
           <div className="card bg-success">
             <div className="card-body">
-              <form className="p-4" onSubmit={handleForm}>
+              <form className="p-4" onSubmit={handleSubmit}>
                 <div className="form-group">
                   <label htmlFor="userName" className="text-light">
                     Name:
