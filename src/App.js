@@ -9,11 +9,8 @@ function App() {
 
   return (
     <div className="App">
-      {/** Navigation */}
       <Navigation user={user} />
-      {/** Welcome */}
       <Welcome user={user} />
-      {/** Home */}
       <Home user={user} />
     </div>
   );
