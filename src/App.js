@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Navigation from "./Navigation";
 import Welcome from "./Welcome";
 import Register from "./Register";
@@ -9,23 +14,38 @@ import Home from "./Home";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState("Bob");
+  const [user, setUser] = useState("Uncle Bob");
 
+  let routes = (
+    <Switch>
+      <Route path="/register" render={(props) => <Register {...props} />} />
+      <Route path="/login" render={(props) => <Login {...props} />} />
+      <Route
+        path="/"
+        exact
+        render={(props) => <Home {...props} user={user} />}
+      />
+      <Redirect to="/" />
+    </Switch>
+  );
+  if (user)
+    routes = (
+      <Switch>
+        <Route path="/meetings" render={(props) => <Meetings {...props} />} />
+        <Route
+          path="/"
+          exact
+          render={(props) => <Home {...props} user={user} />}
+        />
+        <Redirect to="/" />
+      </Switch>
+    );
   return (
     <Router>
       <div className="App">
         <Navigation user={user} />
         <Welcome user={user} />
-        <Switch>
-          <Route path="/register" render={(props) => <Register {...props} />} />
-          <Route path="/login" render={(props) => <Login {...props} />} />
-          <Route path="/meetings" render={(props) => <Meetings {...props} />} />
-          <Route
-            path="/"
-            exact
-            render={(props) => <Home {...props} user={user} />}
-          />
-        </Switch>
+        {routes}
       </div>
     </Router>
   );
