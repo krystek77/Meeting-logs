@@ -14,7 +14,7 @@ import Home from "./Home";
 import "./App.css";
 
 function App() {
-  const [user, setUser] = useState("Uncle Bob");
+  const [user, setUser] = useState(null);
 
   let routes = (
     <Switch>
