@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -41,12 +41,26 @@ function App() {
         <Redirect to="/" />
       </Switch>
     );
-      
+
+  useEffect(() => {
+    console.log("[App.js]-mounted", user);
+    const refDB = firebase.database().ref("/user");
+
+    refDB.on("value", (snapshot) => {
+      const FBUser = snapshot.val();
+      setUser(FBUser);
+    });
+
+    return () => {
+      console.log("[App.js]-unmounted");
+    };
+  }, [user]);
+
   return (
     <Router>
       <div className="App">
         <Navigation user={user} />
-        <Welcome user={user} />
+        {user && <Welcome user={user} />}
         {routes}
       </div>
     </Router>
