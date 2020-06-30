@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Navigation from "./Navigation";
+import Welcome from "./Welcome";
 import "./App.css";
 
 function App() {
@@ -10,25 +11,7 @@ function App() {
       {/** Navigation */}
       <Navigation user={user} />
       {/** Welcome */}
-      {user && (
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <div className="d-flex align-items-center justify-content-center mb-4">
-                <p className="mb-0 mr-2">
-                  Welcome,
-                  <span className="text-success font-weight-bold ml-2">
-                    {user}
-                  </span>
-                </p>
-                <a href="/logout" className="font-weight-bold">
-                  log out
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      <Welcome user={user} />
       {/** Home */}
       <div className="container">
         <div className="row">
