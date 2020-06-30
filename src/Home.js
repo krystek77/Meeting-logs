@@ -19,12 +19,12 @@ export default function Home(props) {
       {!props.user && (
         <div className="row">
           <div className="col text-center">
-            <button type="button" className="btn btn-success mr-2 btn-lg">
+            <Link to="/register" className="btn btn-success mr-2 btn-lg">
               register
-            </button>
-            <button type="button" className="btn btn-success mr-2 btn-lg">
+            </Link>
+            <Link to="/login" className="btn btn-success mr-2 btn-lg">
               log in
-            </button>
+            </Link>
           </div>
         </div>
       )}
