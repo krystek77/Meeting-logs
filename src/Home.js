@@ -27,6 +27,13 @@ export default function Home(props) {
           </div>
         </div>
       )}
+      {props.user && (
+        <div className="row">
+          <div className="col text-center">
+            <a className="btn btn-success btn-lg" href="/meetings">meetings</a>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
