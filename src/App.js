@@ -12,6 +12,7 @@ import Login from "./Login";
 import Meetings from "./Meetings";
 import Home from "./Home";
 import "./App.css";
+import firebase from "./Firebase";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -40,6 +41,7 @@ function App() {
         <Redirect to="/" />
       </Switch>
     );
+      
   return (
     <Router>
       <div className="App">
