@@ -201,6 +201,14 @@ export default function Register() {
           </div>
         </div>
       </div>
+
+      {authError.errorMessage && (
+        <div className="row justify-content-center">
+          <div className="col-lg-6">
+            <Error code={authError.code} message={authError.errorMessage} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
