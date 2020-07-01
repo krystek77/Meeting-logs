@@ -3,7 +3,7 @@ import "firebase/database";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: `"${process.env.REACT_APP_FIREBASE_API_KEY}"`,
+  apiKey: "AIzaSyAsCDfHT3qgUXsXP6Aoy_07qj04MzLvX-M",
   authDomain: "meetings-f5c51.firebaseapp.com",
   databaseURL: "https://meetings-f5c51.firebaseio.com",
   projectId: "meetings-f5c51",

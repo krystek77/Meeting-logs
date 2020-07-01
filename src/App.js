@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navigation from "./Navigation";
 import Welcome from "./Welcome";
 import Register from "./Register";
@@ -15,52 +10,71 @@ import "./App.css";
 import firebase from "./Firebase";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({
+    userID: null,
+    displayName: null,
+    email: null,
+  });
+
+  useEffect(() => {
+    console.log("[App.js]-mounted");
+    const unsubscribeUser = firebase.auth().onAuthStateChanged((FBUser) => {
+      if (FBUser) {
+        setUser({
+          userID: FBUser.uid,
+          displayName: FBUser.displayName,
+          email: FBUser.email,
+        });
+      } else {
+        console.log("User is logged out");
+      }
+    });
+    return () => {
+      console.log("[App.js]-unmounted");
+      unsubscribeUser();
+    };
+  }, []);
+
+  const registrationInfo = (userName) => {
+    console.log("registrationInfo");
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      FBUser.updateProfile({ displayName: userName })
+        .then(() => {
+          setUser({
+            userID: FBUser.uid,
+            displayName: FBUser.displayName,
+            email: FBUser.email,
+          });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  };
 
   let routes = (
     <Switch>
-      <Route path="/register" render={(props) => <Register {...props} />} />
+      <Route
+        path="/register"
+        render={(props) => (
+          <Register {...props} registrationInfo={registrationInfo} />
+        )}
+      />
       <Route path="/login" render={(props) => <Login {...props} />} />
+      <Route path="/meetings" render={(props) => <Meetings {...props} />} />
       <Route
         path="/"
         exact
-        render={(props) => <Home {...props} user={user} />}
+        render={(props) => <Home {...props} userID={user.userID} />}
       />
-      <Redirect to="/" />
     </Switch>
   );
-  if (user)
-    routes = (
-      <Switch>
-        <Route path="/meetings" render={(props) => <Meetings {...props} />} />
-        <Route
-          path="/"
-          exact
-          render={(props) => <Home {...props} user={user} />}
-        />
-        <Redirect to="/" />
-      </Switch>
-    );
-
-  useEffect(() => {
-    console.log("[App.js]-mounted", user);
-    const refDB = firebase.database().ref("/user");
-
-    refDB.on("value", (snapshot) => {
-      const FBUser = snapshot.val();
-      setUser(FBUser);
-    });
-
-    return () => {
-      console.log("[App.js]-unmounted");
-    };
-  }, [user]);
-
+  console.log("BEFORE RENDER APP.js");
   return (
     <Router>
       <div className="App">
-        <Navigation user={user} />
-        {user && <Welcome user={user} />}
+        <Navigation userID={user.userID} />
+        {user.userID && <Welcome userName={user.displayName} />}
         {routes}
       </div>
     </Router>

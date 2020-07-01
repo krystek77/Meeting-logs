@@ -16,7 +16,7 @@ export default function Home(props) {
           </p>
         </div>
       </div>
-      {!props.user && (
+      {!props.userID && (
         <div className="row">
           <div className="col text-center">
             <Link to="/register" className="btn btn-success mr-2 btn-lg">
@@ -28,7 +28,7 @@ export default function Home(props) {
           </div>
         </div>
       )}
-      {props.user && (
+      {props.userID && (
         <div className="row">
           <div className="col text-center">
             <Link className="btn btn-success btn-lg" to="/meetings">

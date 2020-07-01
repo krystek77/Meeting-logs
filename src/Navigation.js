@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { GiExplosiveMeeting } from "react-icons/gi";
 
 export default function Navigation(props) {
+  useEffect(() => {
+    console.log("[navigation.js]-mounted", props);
+    return () => {
+      console.log("[navigation.js]-unmounted", props);
+    };
+  });
+  console.log("BEFORE Render Navigation.js");
   return (
     <nav className="navbar bg-success navbar-dark mb-5">
       <Link to="/" className="navbar-brand">
@@ -10,7 +17,7 @@ export default function Navigation(props) {
         Meeting Log
       </Link>
       <ul className="nav">
-        {!props.user && (
+        {!props.userID && (
           <li className="nav-item">
             <Link
               to="/register"
@@ -20,7 +27,7 @@ export default function Navigation(props) {
             </Link>
           </li>
         )}
-        {!props.user && (
+        {!props.userID && (
           <li className="nav-item">
             <Link
               to="/login"
@@ -30,7 +37,7 @@ export default function Navigation(props) {
             </Link>
           </li>
         )}
-        {props.user && (
+        {props.userID && (
           <li className="nav-item">
             <Link
               to="/meetings"
@@ -40,7 +47,7 @@ export default function Navigation(props) {
             </Link>
           </li>
         )}
-        {props.user && (
+        {props.userID && (
           <li className="nav-item">
             <Link
               to="/logout"

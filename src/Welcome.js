@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink as Link } from "react-router-dom";
 
 export default function Welcome(props) {
+  useEffect(() => {
+    console.log("[Welcome.js]-mounted", props);
+    return () => {
+      console.log("[Welcome.js]-unmounted", props);
+    };
+  });
+  console.log("BEFORE Render Welcome.js");
+
   let welcome = (
     <div className="container">
       <div className="row">
@@ -10,7 +18,7 @@ export default function Welcome(props) {
             <p className="mb-0 mr-2">
               Welcome,
               <span className="text-success font-weight-bold ml-2">
-                {props.user}
+                {props.userName}
               </span>
             </p>
             <Link to="/logout" className="font-weight-bold">
@@ -21,6 +29,6 @@ export default function Welcome(props) {
       </div>
     </div>
   );
-  if (!props.user) welcome = null;
+  if (!props.userName) welcome = null;
   return welcome;
 }

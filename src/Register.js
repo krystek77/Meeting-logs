@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Error from "./Error";
 import firebase from "./Firebase";
 
-export default function Register() {
+export default function Register(props) {
   const [input, setInput] = useState({
     userName: "",
     email: "",
@@ -91,15 +91,15 @@ export default function Register() {
       email: input.email,
       password: input.password,
     };
-    console.log(registeredData);
     firebase
       .auth()
       .createUserWithEmailAndPassword(
         registeredData.email,
         registeredData.password
       )
-      .then((result) => {
-        console.log(result);
+      .then(() => {
+        props.registrationInfo(registeredData.userName);
+        props.history.push("/meetings");
       })
       .catch((error) => {
         if (error.message !== null) {
