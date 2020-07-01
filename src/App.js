@@ -64,6 +64,15 @@ function App(props) {
       .signOut()
       .then(() => props.history.push("/login"));
   };
+  const addMeeting = (meeting) => {
+    console.log("Add meeting", meeting);
+    const ref = firebase.database().ref(`meetings/${user.userID}`);
+    ref.push({
+      meetingName: meeting.name,
+      description: meeting.description,
+      added: new Date().toISOString(),
+    });
+  };
   let routes = (
     <Switch>
       <Route
@@ -73,7 +82,10 @@ function App(props) {
         )}
       />
       <Route path="/login" render={(props) => <Login {...props} />} />
-      <Route path="/meetings" render={(props) => <Meetings {...props} />} />
+      <Route
+        path="/meetings"
+        render={(props) => <Meetings {...props} addMeeting={addMeeting} />}
+      />
       <Route
         path="/"
         exact
