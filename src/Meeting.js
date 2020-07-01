@@ -1,5 +1,7 @@
 import React from "react";
 import { AiTwotoneDelete } from "react-icons/ai";
+import { FaUserCheck } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 export default function Meeting(props) {
   return (
@@ -18,6 +20,9 @@ export default function Meeting(props) {
           >
             <AiTwotoneDelete />
           </button>
+          <Link to="/checkin" className="btn btn-outline-success">
+            <FaUserCheck />
+          </Link>
         </div>
       </div>
     </div>
