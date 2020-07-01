@@ -6,6 +6,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Meetings from "./Meetings";
 import Home from "./Home";
+import Checkin from './Checkin';
 import "./App.css";
 import firebase from "./Firebase";
 
@@ -88,6 +89,7 @@ function App(props) {
           <Meetings {...props} addMeeting={addMeeting} userID={user.userID} />
         )}
       />
+      <Route path="/checkin" render={(props)=><Checkin {...props}/>}/>
       <Route
         path="/"
         exact
