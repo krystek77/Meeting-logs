@@ -30,7 +30,7 @@ export default function Meeting(props) {
             <FaUserCheck />
           </Link>
           <Link
-            to="/attendees"
+            to={`/attendees/${props.userID}/${props.meeting.meetingID}`}
             className="btn btn-outline-success"
             title="check out attebdees list"
             onClick={() => console.log("to attendees list")}
