@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
+import MeetingsList from "./MeetingsList";
 
 export default function Meetings(props) {
   const [meeting, setMeeting] = useState({ name: "", description: "" });
@@ -47,6 +48,7 @@ export default function Meetings(props) {
           </div>
         </div>
       </div>
+      <MeetingsList />
     </div>
   );
 }
