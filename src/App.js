@@ -131,7 +131,10 @@ function App(props) {
         exact
         render={(props) => <Home {...props} userID={user.userID} />}
       />
-      <Route path="/attendees" render={(props) => <Attendees {...props} />} />
+      <Route
+        path="/attendees/:userID/:meetingID"
+        render={(props) => <Attendees {...props} adminUser={user.userID} />}
+      />
     </Switch>
   );
 
