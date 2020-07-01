@@ -52,6 +52,7 @@ export default function Navigation(props) {
             <Link
               to="/logout"
               className="nav-link text-light font-weight-bold text-center"
+              onClick={props.logoutUser}
             >
               log out
             </Link>

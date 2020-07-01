@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import Navigation from "./Navigation";
 import Welcome from "./Welcome";
 import Register from "./Register";
@@ -9,7 +9,7 @@ import Home from "./Home";
 import "./App.css";
 import firebase from "./Firebase";
 
-function App() {
+function App(props) {
   const [user, setUser] = useState({
     userID: null,
     displayName: null,
@@ -51,7 +51,19 @@ function App() {
         });
     });
   };
-
+  const logoutUser = (event) => {
+    event.preventDefault();
+    console.log("Logout user");
+    setUser({
+      userID: null,
+      displayName: null,
+      email: null,
+    });
+    firebase
+      .auth()
+      .signOut()
+      .then(() => props.history.push("/login"));
+  };
   let routes = (
     <Switch>
       <Route
@@ -71,14 +83,14 @@ function App() {
   );
   console.log("BEFORE RENDER APP.js");
   return (
-    <Router>
-      <div className="App">
-        <Navigation userID={user.userID} />
-        {user.userID && <Welcome userName={user.displayName} />}
-        {routes}
-      </div>
-    </Router>
+    <div className="App">
+      <Navigation userID={user.userID} logoutUser={logoutUser} />
+      {user.userID && (
+        <Welcome userName={user.displayName} logoutUser={logoutUser} />
+      )}
+      {routes}
+    </div>
   );
 }
 
-export default App;
+export default withRouter(App);

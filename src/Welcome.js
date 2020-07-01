@@ -21,7 +21,11 @@ export default function Welcome(props) {
                 {props.userName}
               </span>
             </p>
-            <Link to="/logout" className="font-weight-bold">
+            <Link
+              to="/logout"
+              className="font-weight-bold"
+              onClick={props.logoutUser}
+            >
               log out
             </Link>
           </div>
