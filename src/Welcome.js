@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink as Link } from "react-router-dom";
 
-export default function Welcome(props) {
+export default React.memo(function Welcome(props) {
   useEffect(() => {
     console.log("[Welcome.js]-mounted", props);
     return () => {
@@ -35,4 +35,4 @@ export default function Welcome(props) {
   );
   if (!props.userName) welcome = null;
   return welcome;
-}
+});

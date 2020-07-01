@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink as Link } from "react-router-dom";
 
-export default function Home(props) {
+export default React.memo(function Home(props) {
   return (
     <div className="container">
       <div className="row">
@@ -39,4 +39,4 @@ export default function Home(props) {
       )}
     </div>
   );
-}
+});

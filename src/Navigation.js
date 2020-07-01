@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { NavLink as Link } from "react-router-dom";
 import { GiExplosiveMeeting } from "react-icons/gi";
 
-export default function Navigation(props) {
+export default React.memo(function Navigation(props) {
   useEffect(() => {
     console.log("[navigation.js]-mounted", props);
     return () => {
@@ -61,4 +61,4 @@ export default function Navigation(props) {
       </ul>
     </nav>
   );
-}
+});
