@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import MeetingsList from "./MeetingsList";
+import firebase from "./Firebase";
 
 export default function Meetings(props) {
   const [meeting, setMeeting] = useState({ name: "", description: "" });
+  const [meetings, setMeetings] = useState([]);
 
   const handleInput = (event) => {
     setMeeting({ name: event.target.value, description: "" });
@@ -14,6 +16,23 @@ export default function Meetings(props) {
     props.addMeeting(meeting);
     setMeeting({ name: "", description: "" });
   };
+
+  useEffect(() => {
+    const ref = firebase.database().ref(`meetings/${props.userID}`);
+
+    const listener = ref.on("value", (snapshot) => {
+      const formattedMeetings = [];
+      const retrivedMeetings = snapshot.val();
+      for (let key in retrivedMeetings) {
+        formattedMeetings.push({ id: key, ...retrivedMeetings[key] });
+      }
+      setMeetings(formattedMeetings);
+    });
+
+    return () => {
+      ref.off("value", listener);
+    };
+  }, [props.userID]);
 
   return (
     <div className="container">
@@ -48,7 +67,7 @@ export default function Meetings(props) {
           </div>
         </div>
       </div>
-      <MeetingsList />
+      <MeetingsList meetings={meetings} />
     </div>
   );
 }
