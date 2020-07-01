@@ -5,38 +5,32 @@ import firebase from "./Firebase";
 
 export default function Meetings(props) {
   const [meeting, setMeeting] = useState({ name: "", description: "" });
-  const [meetings, setMeetings] = useState([]);
-
-  const handleInput = (event) => {
-    setMeeting({ name: event.target.value, description: "" });
-  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     props.addMeeting(meeting);
     setMeeting({ name: "", description: "" });
   };
-  const deleteMeeting = (meetingID) => {
-    console.log(meetingID);
-    const ref = firebase
-      .database()
-      .ref(`meetings/${props.userID}/${meetingID}`);
-    ref.remove();
+
+  const handleInput = (event) => {
+    const meetingName = event.target.value;
+    setMeeting({ name: meetingName, description: "" });
   };
+
   useEffect(() => {
+    console.log("GET meetings by userID");
     const ref = firebase.database().ref(`meetings/${props.userID}`);
 
-    const listener = ref.on("value", (snapshot) => {
+    const listen = ref.on("value", (snapshot) => {
+      const retivedMeetings = snapshot.val();
       const formattedMeetings = [];
-      const retrivedMeetings = snapshot.val();
-      for (let key in retrivedMeetings) {
-        formattedMeetings.push({ id: key, ...retrivedMeetings[key] });
+      for (let key in retivedMeetings) {
+        formattedMeetings.push({ id: key, ...retivedMeetings[key] });
       }
-      setMeetings(formattedMeetings);
+      props.setFilteredMeetings(formattedMeetings);
     });
-
     return () => {
-      ref.off("value", listener);
+      ref.off("value", listen);
     };
   }, [props.userID]);
 
@@ -50,7 +44,7 @@ export default function Meetings(props) {
         </div>
       </div>
       <div className="row justify-content-center">
-        <div className="col-lg-6">
+        <div className="col-lg-8">
           <div className="card bg-primary">
             <div className="card-body">
               <form onSubmit={handleSubmit}>
@@ -73,7 +67,10 @@ export default function Meetings(props) {
           </div>
         </div>
       </div>
-      <MeetingsList meetings={meetings} deleteMeeting={deleteMeeting} />
+      <MeetingsList
+        meetings={props.meetings}
+        deleteMeeting={props.deleteMeeting}
+      />
     </div>
   );
 }

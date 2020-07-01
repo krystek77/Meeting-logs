@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Route, Switch, withRouter } from "react-router-dom";
 import Navigation from "./Navigation";
 import Welcome from "./Welcome";
@@ -6,7 +6,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Meetings from "./Meetings";
 import Home from "./Home";
-import Checkin from './Checkin';
+import Checkin from "./Checkin";
 import "./App.css";
 import firebase from "./Firebase";
 
@@ -16,6 +16,7 @@ function App(props) {
     displayName: null,
     email: null,
   });
+  const [meetings, setMeetings] = useState([]);
 
   useEffect(() => {
     console.log("[App.js]-mounted");
@@ -60,20 +61,30 @@ function App(props) {
       displayName: null,
       email: null,
     });
+    setMeetings([]);
     firebase
       .auth()
       .signOut()
       .then(() => props.history.push("/login"));
   };
+
   const addMeeting = (meeting) => {
-    console.log("Add meeting", meeting);
+    console.log("ADD meeting", meeting);
     const ref = firebase.database().ref(`meetings/${user.userID}`);
-    ref.push({
-      meetingName: meeting.name,
-      description: meeting.description,
-      added: new Date().toISOString(),
-    });
+    ref.push({ ...meeting, added: new Date().toISOString() });
   };
+
+  const setFilteredMeetings = (meetings) => {
+    console.log("SET FILTERED MEETINGS", meetings);
+    setMeetings(meetings);
+  };
+
+  const deleteMeeting = (meetingID) => {
+    console.log("DELETING MEETING", meetingID);
+    const ref = firebase.database().ref(`meetings/${user.userID}/${meetingID}`);
+    ref.remove().then(() => console.log("Removed succesfully"));
+  };
+
   let routes = (
     <Switch>
       <Route
@@ -86,10 +97,17 @@ function App(props) {
       <Route
         path="/meetings"
         render={(props) => (
-          <Meetings {...props} addMeeting={addMeeting} userID={user.userID} />
+          <Meetings
+            {...props}
+            meetings={meetings}
+            addMeeting={addMeeting}
+            setFilteredMeetings={setFilteredMeetings}
+            deleteMeeting={deleteMeeting}
+            userID={user.userID}
+          />
         )}
       />
-      <Route path="/checkin" render={(props)=><Checkin {...props}/>}/>
+      <Route path="/checkin" render={(props) => <Checkin {...props} />} />
       <Route
         path="/"
         exact
@@ -97,7 +115,7 @@ function App(props) {
       />
     </Switch>
   );
-  console.log("BEFORE RENDER APP.js");
+
   return (
     <div className="App">
       <Navigation userID={user.userID} logoutUser={logoutUser} />

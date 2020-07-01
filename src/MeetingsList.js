@@ -1,12 +1,13 @@
 import React from "react";
 import Meeting from "./Meeting";
 
-export default function MeetingsList(props) {
+export default React.memo(function MeetingsList(props) {
+  console.log("MeetingsList", props.meetings);
   return (
     <React.Fragment>
-      {props.meetings && props.meetings.length && (
+      {props.meetings && props.meetings.length ? (
         <div className="row justify-content-center">
-          <div className="col-lg-6">
+          <div className="col-lg-8">
             {props.meetings.map((meeting) => {
               return (
                 <Meeting
@@ -18,7 +19,7 @@ export default function MeetingsList(props) {
             })}
           </div>
         </div>
-      )}
+      ) : null}
     </React.Fragment>
   );
-}
+});
