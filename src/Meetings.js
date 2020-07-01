@@ -16,7 +16,13 @@ export default function Meetings(props) {
     props.addMeeting(meeting);
     setMeeting({ name: "", description: "" });
   };
-
+  const deleteMeeting = (meetingID) => {
+    console.log(meetingID);
+    const ref = firebase
+      .database()
+      .ref(`meetings/${props.userID}/${meetingID}`);
+    ref.remove();
+  };
   useEffect(() => {
     const ref = firebase.database().ref(`meetings/${props.userID}`);
 
@@ -67,7 +73,7 @@ export default function Meetings(props) {
           </div>
         </div>
       </div>
-      <MeetingsList meetings={meetings} />
+      <MeetingsList meetings={meetings} deleteMeeting={deleteMeeting} />
     </div>
   );
 }

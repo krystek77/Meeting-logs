@@ -6,7 +6,13 @@ export default function MeetingsList(props) {
     <div className="row justify-content-center">
       <div className="col-lg-6">
         {props.meetings.map((meeting) => {
-          return <Meeting key={meeting.id} meeting={meeting} />;
+          return (
+            <Meeting
+              key={meeting.id}
+              meeting={meeting}
+              deleteMeeting={() => props.deleteMeeting(meeting.id)}
+            />
+          );
         })}
       </div>
     </div>
