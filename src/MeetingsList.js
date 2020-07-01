@@ -1,8 +1,16 @@
 import React from "react";
 import Meeting from "./Meeting";
+import firebase from "./Firebase";
 
 export default React.memo(function MeetingsList(props) {
-  console.log("MeetingsList", props.meetings);
+  const deleteMeeting = (meetingID) => {
+    console.log("Delete meeting", meetingID);
+    const ref = firebase
+      .database()
+      .ref(`meetings/${props.userID}/${meetingID}`);
+    ref.remove().then(() => console.log("Removed succesfully"));
+  };
+
   return (
     <React.Fragment>
       {props.meetings && props.meetings.length ? (
@@ -11,9 +19,10 @@ export default React.memo(function MeetingsList(props) {
             {props.meetings.map((meeting) => {
               return (
                 <Meeting
-                  key={meeting.id}
+                  key={meeting.meetingID}
                   meeting={meeting}
-                  deleteMeeting={() => props.deleteMeeting(meeting.id)}
+                  userID={props.userID}
+                  deleteMeeting={() => deleteMeeting(meeting.meetingID)}
                 />
               );
             })}

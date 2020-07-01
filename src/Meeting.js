@@ -1,6 +1,7 @@
 import React from "react";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FaUserCheck } from "react-icons/fa";
+import { AiOutlineUnorderedList } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 export default function Meeting(props) {
@@ -16,12 +17,25 @@ export default function Meeting(props) {
           <button
             type="button"
             className="btn btn-outline-danger"
+            title="delete meeting"
             onClick={props.deleteMeeting}
           >
             <AiTwotoneDelete />
           </button>
-          <Link to="/checkin" className="btn btn-outline-success">
+          <Link
+            to={`checkin/${props.userID}/${props.meeting.meetingID}`}
+            title="check in to meeting"
+            className="btn btn-outline-success"
+          >
             <FaUserCheck />
+          </Link>
+          <Link
+            to="/attendees"
+            className="btn btn-outline-success"
+            title="check out attebdees list"
+            onClick={() => console.log("to attendees list")}
+          >
+            <AiOutlineUnorderedList />
           </Link>
         </div>
       </div>

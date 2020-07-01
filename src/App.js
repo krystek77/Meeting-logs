@@ -7,6 +7,7 @@ import Login from "./Login";
 import Meetings from "./Meetings";
 import Home from "./Home";
 import Checkin from "./Checkin";
+import Attendees from "./Attendees";
 import "./App.css";
 import firebase from "./Firebase";
 
@@ -16,10 +17,15 @@ function App(props) {
     displayName: null,
     email: null,
   });
-  const [meetings, setMeetings] = useState([]);
+  const [meetings, setMeetings] = useState({
+    meetingsList: null,
+    countMeetings: 0,
+  });
 
   useEffect(() => {
     console.log("[App.js]-mounted");
+    let meetingsRef = null;
+    let unsubscribMeetings = null;
     const unsubscribeUser = firebase.auth().onAuthStateChanged((FBUser) => {
       if (FBUser) {
         setUser({
@@ -27,13 +33,35 @@ function App(props) {
           displayName: FBUser.displayName,
           email: FBUser.email,
         });
+        meetingsRef = firebase.database().ref(`meetings/${FBUser.uid}`);
+        unsubscribMeetings = meetingsRef.on("value", (snapshot) => {
+          const meetings = snapshot.val();
+          const meetingsList = [];
+          for (let key in meetings) {
+            meetingsList.push({
+              meetingID: key,
+              ...meetings[key],
+              added: new Date().toISOString(),
+            });
+          }
+          setMeetings({
+            meetingsList: meetingsList,
+            countMeetings: meetingsList.length,
+          });
+        });
       } else {
-        console.log("User is logged out");
+        setUser({
+          userID: null,
+          displayName: null,
+          email: null,
+        });
       }
     });
+
     return () => {
       console.log("[App.js]-unmounted");
       unsubscribeUser();
+      meetingsRef.off("value", unsubscribMeetings);
     };
   }, []);
 
@@ -74,17 +102,6 @@ function App(props) {
     ref.push({ ...meeting, added: new Date().toISOString() });
   };
 
-  const setFilteredMeetings = (meetings) => {
-    console.log("SET FILTERED MEETINGS", meetings);
-    setMeetings(meetings);
-  };
-
-  const deleteMeeting = (meetingID) => {
-    console.log("DELETING MEETING", meetingID);
-    const ref = firebase.database().ref(`meetings/${user.userID}/${meetingID}`);
-    ref.remove().then(() => console.log("Removed succesfully"));
-  };
-
   let routes = (
     <Switch>
       <Route
@@ -99,20 +116,22 @@ function App(props) {
         render={(props) => (
           <Meetings
             {...props}
-            meetings={meetings}
+            meetings={meetings.meetingsList}
             addMeeting={addMeeting}
-            setFilteredMeetings={setFilteredMeetings}
-            deleteMeeting={deleteMeeting}
             userID={user.userID}
           />
         )}
       />
-      <Route path="/checkin" render={(props) => <Checkin {...props} />} />
+      <Route
+        path="/checkin/:userID/:meetingID"
+        render={(props) => <Checkin {...props} userID={user.userID} />}
+      />
       <Route
         path="/"
         exact
         render={(props) => <Home {...props} userID={user.userID} />}
       />
+      <Route path="/attendees" render={(props) => <Attendees {...props} />} />
     </Switch>
   );
 

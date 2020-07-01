@@ -17,23 +17,6 @@ export default function Meetings(props) {
     setMeeting({ name: meetingName, description: "" });
   };
 
-  useEffect(() => {
-    console.log("GET meetings by userID");
-    const ref = firebase.database().ref(`meetings/${props.userID}`);
-
-    const listen = ref.on("value", (snapshot) => {
-      const retivedMeetings = snapshot.val();
-      const formattedMeetings = [];
-      for (let key in retivedMeetings) {
-        formattedMeetings.push({ id: key, ...retivedMeetings[key] });
-      }
-      props.setFilteredMeetings(formattedMeetings);
-    });
-    return () => {
-      ref.off("value", listen);
-    };
-  }, [props.userID]);
-
   return (
     <div className="container">
       <div className="row">
@@ -67,10 +50,7 @@ export default function Meetings(props) {
           </div>
         </div>
       </div>
-      <MeetingsList
-        meetings={props.meetings}
-        deleteMeeting={props.deleteMeeting}
-      />
+      <MeetingsList meetings={props.meetings} userID={props.userID} />
     </div>
   );
 }
