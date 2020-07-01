@@ -84,7 +84,9 @@ function App(props) {
       <Route path="/login" render={(props) => <Login {...props} />} />
       <Route
         path="/meetings"
-        render={(props) => <Meetings {...props} addMeeting={addMeeting} />}
+        render={(props) => (
+          <Meetings {...props} addMeeting={addMeeting} userID={user.userID} />
+        )}
       />
       <Route
         path="/"
