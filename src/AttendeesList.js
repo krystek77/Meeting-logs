@@ -6,18 +6,20 @@ export default function AttendeesList(props) {
 
   if (props.attendees && props.attendees.length) {
     attendeesList = (
-      <div className="row">
+      <div className="row justify-content-center">
         <div className="col-lg-8">
           <ul className="list-group">
-            {props.attendees.map(({ attendeeID, attendeeEmail, attendeeName }) => {
-              return (
-                <Attendee
-                  key={attendeeID}
-                  attendeeName={attendeeName}
-                  attendeeEmail={attendeeEmail}
-                />
-              );
-            })}
+            {props.attendees.map(
+              ({ attendeeID, attendeeEmail, attendeeName }) => {
+                return (
+                  <Attendee
+                    key={attendeeID}
+                    attendeeName={attendeeName}
+                    attendeeEmail={attendeeEmail}
+                  />
+                );
+              }
+            )}
           </ul>
         </div>
       </div>
