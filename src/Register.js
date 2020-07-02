@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Error from "./Error";
 import firebase from "./Firebase";
 
@@ -16,16 +16,46 @@ export default function Register(props) {
     password: "",
     confirmedPassword: "",
   });
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [touchedInput, setTouchedInput] = useState({
+    userName: false,
+    email: false,
+    password: false,
+    confirmedPassword: false,
+  });
 
   const [authError, setAuthError] = useState({
     code: "",
     errorMessage: "",
   });
 
+  useEffect(() => {
+    if (
+      error.email === "" &&
+      error.password === "" &&
+      error.userName === "" &&
+      error.confirmedPassword === "" &&
+      touchedInput.email &&
+      touchedInput.password &&
+      touchedInput.userName &&
+      touchedInput.confirmedPassword
+    )
+      setIsFormValid(true);
+    else setIsFormValid(false);
+    return () => {};
+  }, [
+    error.email,
+    error.password,
+    error.confirmedPassword,
+    touchedInput.email,
+    touchedInput.password,
+    touchedInput.userName,
+    touchedInput.confirmedPassword,
+  ]);
   const handleInput = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
+    setTouchedInput({ ...touchedInput, [name]: true });
     switch (name) {
       case "userName":
         const regExpUserName = /^([A-Z]+[A-Za-z]*)$/;
@@ -191,6 +221,7 @@ export default function Register(props) {
                 </div>
                 <button
                   type="submit"
+                  disabled={isFormValid ? false : true}
                   className="btn btn-primary btn-lg d-block ml-auto"
                 >
                   Register
