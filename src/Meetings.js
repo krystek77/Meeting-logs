@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import MeetingsList from "./MeetingsList";
-import firebase from "./Firebase";
+
 
 export default function Meetings(props) {
   const [meeting, setMeeting] = useState({ name: "", description: "" });
