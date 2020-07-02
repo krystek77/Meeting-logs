@@ -6,9 +6,11 @@ export default function Attendee(props) {
   const {
     attendeeName,
     attendeeEmail,
+    attendeeStar,
     adminUser,
     userID,
     deleteAttendee,
+    toggleStar,
   } = props;
 
   const admin = adminUser === userID ? true : false;
@@ -18,9 +20,12 @@ export default function Attendee(props) {
         <div className="btn-group">
           <button
             type="button"
-            className="btn btn-outline-secondary"
-            title="Add to favorite"
-            onClick={() => console.log("Set star")}
+            className={
+              "btn btn-outline-dark " +
+              (attendeeStar ? "btn-warning" : "btn-light")
+            }
+            title="Give user the star"
+            onClick={toggleStar}
           >
             <AiFillStar />
           </button>
