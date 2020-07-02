@@ -3,13 +3,13 @@ import "firebase/database";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAsCDfHT3qgUXsXP6Aoy_07qj04MzLvX-M",
-  authDomain: "meetings-f5c51.firebaseapp.com",
-  databaseURL: "https://meetings-f5c51.firebaseio.com",
-  projectId: "meetings-f5c51",
-  storageBucket: "meetings-f5c51.appspot.com",
-  messagingSenderId: "835177145486",
-  appId: "1:835177145486:web:5aa9bebe53cd34269115df",
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
