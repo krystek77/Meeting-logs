@@ -3,7 +3,14 @@ import { AiFillStar, AiFillDelete } from "react-icons/ai";
 import { MdEmail } from "react-icons/md";
 
 export default function Attendee(props) {
-  const { attendeeName, attendeeEmail, adminUser, userID } = props;
+  const {
+    attendeeName,
+    attendeeEmail,
+    adminUser,
+    userID,
+    deleteAttendee,
+  } = props;
+
   const admin = adminUser === userID ? true : false;
   return (
     <li className="list-group-item d-flex align-items-center">
@@ -21,7 +28,7 @@ export default function Attendee(props) {
             type="button"
             className="btn btn-outline-danger"
             title="Delete attendee"
-            onClick={() => console.log("Delete attendee")}
+            onClick={deleteAttendee}
           >
             <AiFillDelete />
           </button>

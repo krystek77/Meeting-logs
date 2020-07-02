@@ -38,6 +38,7 @@ export default function Attendees(props) {
         attendees={attendees}
         adminUser={props.adminUser}
         userID={props.match.params.userID}
+        meetingID={props.match.params.meetingID}
       />
     </div>
   );
