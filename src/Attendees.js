@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import AttendeesList from "./AttendeesList";
 import firebase from "./Firebase";
+import { AiOutlineReload } from "react-icons/ai";
+import { FaRandom } from "react-icons/fa";
 
 export default function Attendees(props) {
   const [attendees, setAttendees] = useState(null);
@@ -27,7 +29,7 @@ export default function Attendees(props) {
     return () => {
       ref.off("value", unsubscribe);
     };
-  }, [props.match.params.userID, props.match.params.meetingID,searchQuery]);
+  }, [props.match.params.userID, props.match.params.meetingID, searchQuery]);
 
   const handleInput = (event) => {
     setSearchQuery(event.target.value);
@@ -55,6 +57,14 @@ export default function Attendees(props) {
                   onChange={handleInput}
                   placeholder="Search query"
                 />
+                <div className="input-group-append">
+                  <button type="button" className="btn btn-lg btn-success">
+                    <AiOutlineReload />
+                  </button>
+                  <button type="button" className="btn btn-lg btn-secondary">
+                    <FaRandom />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
