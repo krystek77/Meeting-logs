@@ -34,7 +34,11 @@ export default function Attendees(props) {
           </h1>
         </div>
       </div>
-      <AttendeesList attendees={attendees} />
+      <AttendeesList
+        attendees={attendees}
+        adminUser={props.adminUser}
+        userID={props.match.params.userID}
+      />
     </div>
   );
 }
