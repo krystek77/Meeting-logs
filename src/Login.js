@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import firebase from "./Firebase";
 import Error from "./Error";
 
@@ -11,6 +11,11 @@ export default function Login(props) {
   const [error, setError] = useState({
     email: "",
     password: "",
+  });
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [touchedInput, setTouchedInput] = useState({
+    email: false,
+    password: false,
   });
 
   const [authError, setAuthError] = useState({
@@ -53,6 +58,7 @@ export default function Login(props) {
     }
 
     setInput({ ...input, [name]: value });
+    setTouchedInput({ ...touchedInput, [name]: true });
   };
 
   const handleSubmit = (event) => {
@@ -77,6 +83,18 @@ export default function Login(props) {
         }
       });
   };
+  useEffect(() => {
+    if (
+      error.email === "" &&
+      error.password === "" &&
+      touchedInput.email &&
+      touchedInput.password
+    )
+      setIsFormValid(true);
+    else setIsFormValid(false);
+    return () => {
+    };
+  }, [error.email, error.password, touchedInput.email, touchedInput.password]);
 
   return (
     <div className="container">
@@ -125,6 +143,7 @@ export default function Login(props) {
                 </div>
                 <button
                   type="submit"
+                  disabled={isFormValid ? false : true}
                   className="btn btn-primary btn-lg d-block ml-auto"
                 >
                   Log in
