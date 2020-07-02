@@ -16,6 +16,8 @@ export default function AttendeesList(props) {
                     key={attendeeID}
                     attendeeName={attendeeName}
                     attendeeEmail={attendeeEmail}
+                    adminUser={props.adminUser}
+                    userID={props.userID}
                   />
                 );
               }
