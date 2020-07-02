@@ -3,8 +3,8 @@ import AttendeesList from "./AttendeesList";
 import firebase from "./Firebase";
 
 export default function Attendees(props) {
-  console.log(props);
   const [attendees, setAttendees] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const ref = firebase
@@ -18,12 +18,20 @@ export default function Attendees(props) {
       for (let key in attendees) {
         attendeesList.push({ attendeeID: key, ...attendees[key] });
       }
-      setAttendees(attendeesList);
+      const filteredAttendees = attendeesList.filter(({ attendeeName }) => {
+        return attendeeName.match(searchQuery) && true;
+      });
+      setAttendees(filteredAttendees);
     });
+
     return () => {
       ref.off("value", unsubscribe);
     };
-  }, [props.match.params.userID, props.match.params.meetingID]);
+  }, [props.match.params.userID, props.match.params.meetingID,searchQuery]);
+
+  const handleInput = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   return (
     <div className="container">
@@ -32,6 +40,24 @@ export default function Attendees(props) {
           <h1 className="text-center text-uppercase font-weight-bold">
             Attendees List
           </h1>
+        </div>
+      </div>
+      <div className="row justify-content-center mb-3">
+        <div className="col-lg-8">
+          <div className="card bg-primary">
+            <div className="card-body">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control form-control-lg"
+                  value={searchQuery}
+                  name="searchQuery"
+                  onChange={handleInput}
+                  placeholder="Search query"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <AttendeesList
