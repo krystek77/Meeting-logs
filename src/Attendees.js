@@ -34,6 +34,9 @@ export default function Attendees(props) {
   const handleInput = (event) => {
     setSearchQuery(event.target.value);
   };
+  const clearSearchQuery = () => {
+    setSearchQuery("");
+  };
 
   return (
     <div className="container">
@@ -58,7 +61,11 @@ export default function Attendees(props) {
                   placeholder="Search query"
                 />
                 <div className="input-group-append">
-                  <button type="button" className="btn btn-lg btn-success">
+                  <button
+                    type="button"
+                    className="btn btn-lg btn-success"
+                    onClick={clearSearchQuery}
+                  >
                     <AiOutlineReload />
                   </button>
                   <button type="button" className="btn btn-lg btn-secondary">
