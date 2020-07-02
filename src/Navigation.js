@@ -4,12 +4,9 @@ import { GiExplosiveMeeting } from "react-icons/gi";
 
 export default React.memo(function Navigation(props) {
   useEffect(() => {
-    console.log("[navigation.js]-mounted", props);
-    return () => {
-      console.log("[navigation.js]-unmounted", props);
-    };
+    return () => {};
   });
-  console.log("BEFORE Render Navigation.js");
+
   return (
     <nav className="navbar bg-success navbar-dark mb-5">
       <Link to="/" className="navbar-brand">

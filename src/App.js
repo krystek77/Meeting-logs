@@ -23,7 +23,6 @@ function App(props) {
   });
 
   useEffect(() => {
-    console.log("[App.js]-mounted");
     let meetingsRef = null;
     let unsubscribMeetings = null;
     const unsubscribeUser = firebase.auth().onAuthStateChanged((FBUser) => {
@@ -59,14 +58,12 @@ function App(props) {
     });
 
     return () => {
-      console.log("[App.js]-unmounted");
       unsubscribeUser();
       meetingsRef.off("value", unsubscribMeetings);
     };
   }, []);
 
   const registrationInfo = (userName) => {
-    console.log("registrationInfo");
     firebase.auth().onAuthStateChanged((FBUser) => {
       FBUser.updateProfile({ displayName: userName })
         .then(() => {
@@ -83,7 +80,7 @@ function App(props) {
   };
   const logoutUser = (event) => {
     event.preventDefault();
-    console.log("Logout user");
+
     setUser({
       userID: null,
       displayName: null,
@@ -97,7 +94,6 @@ function App(props) {
   };
 
   const addMeeting = (meeting) => {
-    console.log("ADD meeting", meeting);
     const ref = firebase.database().ref(`meetings/${user.userID}`);
     ref.push({ ...meeting, added: new Date().toISOString() });
   };

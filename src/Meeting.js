@@ -33,7 +33,6 @@ export default function Meeting(props) {
             to={`/attendees/${props.userID}/${props.meeting.meetingID}`}
             className="btn btn-outline-success"
             title="check out attebdees list"
-            onClick={() => console.log("to attendees list")}
           >
             <AiOutlineUnorderedList />
           </Link>

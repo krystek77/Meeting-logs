@@ -4,7 +4,6 @@ import firebase from "./Firebase";
 
 export default function AttendeesList(props) {
   const deleteAttendee = (userID, meetingID, attendeeID) => {
-    console.log(userID, meetingID, attendeeID);
     const ref = firebase
       .database()
       .ref(`meetings/${userID}/${meetingID}/attendees/${attendeeID}`);
@@ -12,7 +11,6 @@ export default function AttendeesList(props) {
   };
 
   const toggleStar = (userID, meetingID, attendeeID, attendeeStar) => {
-    console.log(userID, meetingID, attendeeID, attendeeStar);
     const ref = firebase
       .database()
       .ref(

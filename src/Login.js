@@ -26,7 +26,6 @@ export default function Login(props) {
       case "password":
         const regExpPassword = /((?=.*\d)(?=.*[a-zA-Z])(?=.*[@!-'()+--/:?[-`{}~]).{8,10})/;
         if (value.length < 8) {
-          console.log("LESS THEN 8");
           setError({
             ...error,
             [name]: "The password must have more then 8 and less characters",
@@ -66,7 +65,6 @@ export default function Login(props) {
       .auth()
       .signInWithEmailAndPassword(loginData.email, loginData.password)
       .then((result) => {
-        console.log("After login", result);
         props.history.push("/meetings");
       })
       .catch((error) => {

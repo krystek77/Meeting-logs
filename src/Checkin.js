@@ -49,7 +49,6 @@ export default React.memo(function Checkin(props) {
   };
 
   const handleSubmit = (event) => {
-    console.log("SUBMIT CHECK", props.meetingID);
     event.preventDefault();
     const attendeeData = {
       attendeeEmail: input.email,

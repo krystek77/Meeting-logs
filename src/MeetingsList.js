@@ -4,7 +4,6 @@ import firebase from "./Firebase";
 
 export default React.memo(function MeetingsList(props) {
   const deleteMeeting = (meetingID) => {
-    console.log("Delete meeting", meetingID);
     const ref = firebase
       .database()
       .ref(`meetings/${props.userID}/${meetingID}`);

@@ -3,12 +3,8 @@ import { NavLink as Link } from "react-router-dom";
 
 export default React.memo(function Welcome(props) {
   useEffect(() => {
-    console.log("[Welcome.js]-mounted", props);
-    return () => {
-      console.log("[Welcome.js]-unmounted", props);
-    };
+    return () => {};
   });
-  console.log("BEFORE Render Welcome.js");
 
   let welcome = (
     <div className="container">
