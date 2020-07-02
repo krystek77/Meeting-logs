@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AttendeesList from "./AttendeesList";
 import firebase from "./Firebase";
 
 export default function Attendees(props) {
@@ -33,22 +34,7 @@ export default function Attendees(props) {
           </h1>
         </div>
       </div>
-      {attendees && attendees.length ? (
-        <div className="row">
-          <div className="col-lg-8">
-            <ul className="list-group">
-              {attendees.map(({ attendeeID, attendeeEmail, attendeeName }) => {
-                return (
-                  <li className="list-group-item" key={attendeeID}>
-                    <h3>{attendeeName}</h3>
-                    <span>{attendeeEmail}</span>
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
-        </div>
-      ) : null}
+      <AttendeesList attendees={attendees} />
     </div>
   );
 }
