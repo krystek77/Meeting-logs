@@ -7,6 +7,7 @@ import { FaRandom } from "react-icons/fa";
 export default function Attendees(props) {
   const [attendees, setAttendees] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [allAttendees, setAllAttendees] = useState(null);
 
   useEffect(() => {
     const ref = firebase
@@ -20,6 +21,7 @@ export default function Attendees(props) {
       for (let key in attendees) {
         attendeesList.push({ attendeeID: key, ...attendees[key] });
       }
+      setAllAttendees(attendeesList);
       const filteredAttendees = attendeesList.filter(({ attendeeName }) => {
         return attendeeName.match(searchQuery) && true;
       });
@@ -36,6 +38,15 @@ export default function Attendees(props) {
   };
   const clearSearchQuery = () => {
     setSearchQuery("");
+    setAttendees(allAttendees);
+  };
+  const chooseRandom = () => {
+    if (attendees && attendees.length) {
+      const randomIndex = Math.floor(Math.random() * attendees.length);
+      const randomAttendee = attendees[randomIndex];
+      clearSearchQuery();
+      setAttendees([randomAttendee]);
+    }
   };
 
   return (
@@ -68,7 +79,11 @@ export default function Attendees(props) {
                   >
                     <AiOutlineReload />
                   </button>
-                  <button type="button" className="btn btn-lg btn-secondary">
+                  <button
+                    type="button"
+                    className="btn btn-lg btn-secondary"
+                    onClick={chooseRandom}
+                  >
                     <FaRandom />
                   </button>
                 </div>
