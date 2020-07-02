@@ -37,14 +37,13 @@ export default function Attendee(props) {
           >
             <AiFillDelete />
           </button>
-          <button
-            type="button"
+          <a
+            href={`mailto:${attendeeEmail}`}
             className="btn btn-outline-info"
-            title="Delete attendee"
-            onClick={() => console.log("Delete attendee")}
+            title="Send mail to atendee of meeting"
           >
             <MdEmail />
-          </button>
+          </a>
         </div>
       )}
 
